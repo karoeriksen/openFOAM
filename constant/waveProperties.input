@@ -1,0 +1,72 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.4                                   |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          waveProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+seaLevel	0.0;
+
+relaxationNames      (inlet outlet);
+
+initializationName outlet;
+
+inletCoeffs
+{
+    waveType            cnoidalFirst;
+    height              13.3;
+    depth               20;
+    period              14;
+    direction           ( 1 0 0 );
+    Tsoft               26;
+
+    relaxationZone
+    {
+        relaxationScheme    Spatial;
+        relaxationShape     Rectangular;
+        beachType           Empty;
+        relaxType           INLET;
+        startX              ( -250.5 -20 -20);
+        endX                ( -167 20 40);
+        orientation         ( 1 0 0 );
+    }
+}
+
+outletCoeffs
+{
+    waveType    potentialCurrent;
+    U           (0 0 0);
+    Tsoft       2;
+
+    relaxationZone
+    {
+        relaxationScheme Spatial;
+        relaxationShape  Rectangular;
+        beachType        Empty;
+
+        relaxType   OUTLET;
+        startX      (500 -20 -20);
+        endX        (668 20 40);
+        orientation      (1.0 0.0 0.0);
+    }
+};
+
+
+// ************************************************************************* //
